@@ -1,4 +1,4 @@
-
+import Cookies from 'js-cookie';
 
 // Function to handle login
 function login() {
