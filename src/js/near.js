@@ -16,7 +16,7 @@ const getCurrentContractId = () => CONTRACT_IDS[getCurrentNetwork()];
 // UI Elements
 const loginButton = document.getElementById('near_login_button');
 const currentGreetingElement = document.getElementById('current_greeting');
-const getGreetingButton = document.getElementById('get_current_greeting');
+// const getGreetingButton = document.getElementById('get_current_greeting');
 const newGreetingInput = document.getElementById('new_greeting_input');
 const updateGreetingButton = document.getElementById('update_greeting_button');
 
@@ -89,7 +89,7 @@ async function updateGreeting() {
 }
 
 // Event listeners
-getGreetingButton.addEventListener('click', getGreeting);
+// getGreetingButton.addEventListener('click', getGreeting);
 updateGreetingButton.addEventListener('click', updateGreeting);
 
 // Initialize UI
