@@ -1,10 +1,16 @@
 // Initial console log
 console.log('❄️ Hello');
 
-// Contract addresses for different networks
-const CONTRACT_ADDRESS = {
-    mainnet: 'hello.sleet.near',
-    testnet: 'hello.sleet.testnet'
+// Network configuration including contract addresses and RPC endpoints
+const NETWORK_CONFIG = {
+    mainnet: {
+        contractId: 'hello.sleet.near',
+        rpcEndpoint: 'https://rpc.mainnet.near.org'
+    },
+    testnet: {
+        contractId: 'hello.sleet.testnet',
+        rpcEndpoint: 'https://rpc.testnet.near.org'
+    }
 };
 
 // Function to check and update network based on URL
@@ -23,20 +29,20 @@ function checkAndUpdateNetwork() {
     if (currentUrl.endsWith('.near.page')) {
         console.log('Network: mainnet');
         currentNetwork = 'mainnet';
-        contractAddress = CONTRACT_ADDRESS.mainnet;
+        contractAddress = NETWORK_CONFIG.mainnet.contractId;
         localStorage.setItem('networkId', 'mainnet');
         // Keep header as is for mainnet
     } else if (currentUrl.endsWith('.testnet.page')) {
         console.log('Network: testnet');
         currentNetwork = 'testnet';
-        contractAddress = CONTRACT_ADDRESS.testnet;
+        contractAddress = NETWORK_CONFIG.testnet.contractId;
         localStorage.setItem('networkId', 'testnet');
         // Update header for testnet
         headerElement.textContent = 'hello.sleet.testnet';
     } else {
         console.log('Not a NEAR account URL');
         currentNetwork = 'local';
-        contractAddress = CONTRACT_ADDRESS.testnet; // Default to testnet for local development
+        contractAddress = NETWORK_CONFIG.testnet.contractId; // Default to testnet for local development
         // Hide login button if not a NEAR account URL
         if (loginButton) {
             loginButton.style.display = 'none';
@@ -50,14 +56,20 @@ function checkAndUpdateNetwork() {
         console.log('Updated og:url to:', window.location.href);
     }
 
+    // Get RPC endpoint based on network
+    const rpcEndpoint = currentNetwork === 'local' 
+        ? NETWORK_CONFIG.testnet.rpcEndpoint 
+        : NETWORK_CONFIG[currentNetwork].rpcEndpoint;
+
     return {
         network: currentNetwork,
-        contractAddress: contractAddress
+        contractAddress: contractAddress,
+        rpcEndpoint: rpcEndpoint
     };
 }
 
-// Export the contract addresses and network check function
-export const getContractAddress = () => CONTRACT_ADDRESS;
+// Export the network configuration and network check function
+export const getNetworkConfig = () => NETWORK_CONFIG;
 export const getCurrentNetwork = checkAndUpdateNetwork;
 
 // Run the check when the page loads
