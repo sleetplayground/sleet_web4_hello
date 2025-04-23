@@ -1,75 +1,37 @@
-// Import network utilities from hello.js
-import { getCurrentNetwork } from './hello.js';
+import { getHelloContract, getNearRpc } from "./hello";
 
-// Function to get current greeting
+// Function to fetch the greeting from the contract
 async function getGreeting() {
-    try {
-        // Get current network, contract address and RPC endpoint
-        const { network, contractAddress, rpcEndpoint } = getCurrentNetwork();
-        console.log('Getting greeting from network:', network, 'contract:', contractAddress, 'RPC:', rpcEndpoint);
+    const NearRpc = getNearRpc();
+    const HelloContract = getHelloContract();
 
-        // Get the greeting display element
-        const greetingElement = document.getElementById('current_greeting');
-        
-        // Show loading state
-        greetingElement.textContent = 'Loading...';
-
-        // Prepare the RPC request
-        const rpcRequest = {
-            jsonrpc: '2.0',
-            id: 'dontcare',
-            method: 'query',
+    const response = await fetch(NearRpc, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            jsonrpc: "2.0",
+            id: "dontcare",
+            method: "query",
             params: {
-                request_type: 'call_function',
-                finality: 'final',
-                account_id: contractAddress,
-                method_name: 'get_greeting',
-                args_base64: 'e30=' // Empty JSON object {}
+                request_type: "call_function",
+                account_id: HelloContract,
+                method_name: "get_greeting",
+                args_base64: "",
+                finality: "final"
             }
-        };
+        })
+    });
 
-        // Fetch the greeting using RPC
-        const response = await fetch(rpcEndpoint, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(rpcRequest)
-        });
-        
-        if (!response.ok) {
-            throw new Error(`RPC request failed: ${response.status}`);
-        }
+    const data = await response.json();
+    console.log("Full response:", data); // Debugging
 
-        const result = await response.json();
-        if (result.error) {
-            throw new Error(`RPC error: ${result.error.message || JSON.stringify(result.error)}`);
-        }
-
-        // Decode the result
-        const resultBytes = Uint8Array.from(atob(result.result.result), c => c.charCodeAt(0));
-        const resultText = new TextDecoder().decode(resultBytes);
-        const data = JSON.parse(resultText);
-        
-        // Update the display with the greeting
-        greetingElement.textContent = data;
-        console.log('Greeting fetched:', data);
-
-    } catch (error) {
-        console.error('Error fetching greeting:', error);
-        // Update display with error message
-        const greetingElement = document.getElementById('current_greeting');
-        greetingElement.textContent = 'Error: Could not fetch greeting';
+    if (data.result && data.result.result) {
+        const greeting = new TextDecoder().decode(new Uint8Array(data.result.result));
+        document.getElementById("current_greeting").textContent = greeting;
+    } else {
+        document.getElementById("current_greeting").textContent = "Error fetching greeting";
     }
 }
 
-// Add click event listener when DOM is loaded
-document.addEventListener('DOMContentLoaded', () => {
-    const getGreetingButton = document.getElementById('get_current_greeting');
-    if (getGreetingButton) {
-        getGreetingButton.addEventListener('click', getGreeting);
-    }
-});
-
-// Export the getGreeting function
-export { getGreeting };
+// Attach event listener to the button
+document.getElementById("get_current_greeting").addEventListener("click", getGreeting);
