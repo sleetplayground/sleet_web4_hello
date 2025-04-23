@@ -1,4 +1,4 @@
-import { getHelloContract, getNearRpc } from "./hello";
+import { getHelloContract, getNearRpc } from "./config.js";
 
 // Function to fetch the greeting from the contract
 async function getGreeting() {
