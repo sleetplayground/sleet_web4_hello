@@ -7,7 +7,8 @@
     "start": "parcel",
     "build": "npm run clean && parcel build",
     "clean": "rm -rf dist && rm -rf .parcel-cache",
-    "web4_testnet": "web4-deploy dist sleethello.testnet --nearfs --yes"
+    "web4_testnet": "web4-deploy dist sleethello.testnet --nearfs --yes",
+    "web4_mainnet": "web4-deploy dist sleethello.near --nearfs --yes"
   },
   "devDependencies": {
     "parcel": "^2.14.0",
@@ -15,7 +16,6 @@
     "web4-deploy": "^0.8.0"
   },
   "dependencies": {
-    "js-cookie": "^3.0.5",
     "web4-api-js": "^1.0.0"
   }
 }
