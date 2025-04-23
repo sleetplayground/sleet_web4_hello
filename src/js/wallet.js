@@ -27,4 +27,11 @@ function updateLoginState() {
 }
 
 // Check login state when page loads
-document.addEventListener('DOMContentLoaded', updateLoginState);
+document.addEventListener('DOMContentLoaded', () => {
+    updateLoginState();
+    // Add login button event listener
+    const loginButton = document.getElementById('near_login_button');
+    if (loginButton) {
+        loginButton.addEventListener('click', login);
+    }
+});

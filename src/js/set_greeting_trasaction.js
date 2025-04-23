@@ -25,6 +25,17 @@ async function submitGreeting(event) {
             throw new Error('Transaction failed');
         }
 
+        const result = await response.json();
+        if (result.error) {
+            throw new Error(result.error);
+        }
+
+        // Refresh the greeting display
+        const getGreetingButton = document.getElementById('get_current_greeting');
+        if (getGreetingButton) {
+            getGreetingButton.click();
+        }
+
         alert('Greeting updated successfully!');
         document.getElementById('new_greeting_input').value = '';
     } catch (error) {
