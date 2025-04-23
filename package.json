@@ -9,9 +9,9 @@
     "clean": "rm -rf dist && rm -rf .parcel-cache",
     "web4_testnet": "web4-deploy src sleethello.testnet --nearfs --yes"
   },
-  "dependencies": {},
   "devDependencies": {
     "parcel": "^2.14.0",
+    "svgo": "^3.3.2",
     "web4-deploy": "^0.8.0"
   }
 }
