@@ -78,7 +78,7 @@ async function updateGreeting() {
         await call(
             getCurrentContractId(),
             'set_greeting',
-            { message: newGreeting }
+            { greeting: newGreeting }
         );
         await getGreeting();
         newGreetingInput.value = '';
