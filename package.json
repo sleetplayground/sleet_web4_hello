@@ -6,10 +6,12 @@
   "scripts": {
     "start": "parcel",
     "build": "npm run clean && parcel build",
-    "clean": "rm -rf dist && rm -rf .parcel-cache"
+    "clean": "rm -rf dist && rm -rf .parcel-cache",
+    "web4_testnet": "web4-deploy dist sleethello.testnet --nearfs --yes"
   },
-  "dependencies": { },
+  "dependencies": {},
   "devDependencies": {
-    "parcel": "^2.14.0"
+    "parcel": "^2.14.0",
+    "web4-deploy": "^0.8.0"
   }
 }
