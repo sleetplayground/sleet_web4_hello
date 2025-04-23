@@ -7,7 +7,7 @@
     "start": "parcel",
     "build": "npm run clean && parcel build",
     "clean": "rm -rf dist && rm -rf .parcel-cache",
-    "web4_testnet": "web4-deploy dist sleethello.testnet --nearfs --yes"
+    "web4_testnet": "web4-deploy src sleethello.testnet --nearfs --yes"
   },
   "dependencies": {},
   "devDependencies": {
