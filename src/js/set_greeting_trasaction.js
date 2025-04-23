@@ -1,6 +1,5 @@
+import { getHelloContract, getNearRpc } from './config.js';
 
-
-import { getHelloContract } from './config.js';
 
 // Function to submit the greeting transaction
 async function submitGreeting(event) {
@@ -13,22 +12,15 @@ async function submitGreeting(event) {
 
     try {
         const contractId = getHelloContract();
-        const response = await fetch(`/web4/contract/${contractId}/set_greeting`, {
+        await fetch(`/web4/contract/${contractId}/set_greeting`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ greeting })
+            body: JSON.stringify({
+                greeting: greeting
+            })
         });
-
-        if (!response.ok) {
-            throw new Error('Transaction failed');
-        }
-
-        const result = await response.json();
-        if (result.error) {
-            throw new Error(result.error);
-        }
 
         // Refresh the greeting display
         const getGreetingButton = document.getElementById('get_current_greeting');
@@ -40,7 +32,7 @@ async function submitGreeting(event) {
         document.getElementById('new_greeting_input').value = '';
     } catch (error) {
         console.error('Error:', error);
-        alert('Failed to update greeting: ' + error.message);
+        alert('Failed to update greeting');
     }
 }
 
