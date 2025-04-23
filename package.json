@@ -8,7 +8,9 @@
     "build": "npm run clean && parcel build",
     "clean": "rm -rf dist && rm -rf .parcel-cache"
   },
-  "dependencies": {},
+  "dependencies": {
+    "web4-api-js": "^1.0.0"
+  },
   "devDependencies": {
     "parcel": "^2.14.0"
   }
