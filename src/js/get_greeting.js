@@ -16,7 +16,23 @@ async function getGreeting() {
 
         // Fetch the greeting from the contract
         const response = await fetch(`/web4/contract/${contractAddress}/get_greeting`);
-        const data = await response.json();
+        
+        // Check if response is ok
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        // Try to get the response as text first
+        const textData = await response.text();
+        
+        // Try to parse as JSON if it looks like JSON
+        let data;
+        try {
+            data = JSON.parse(textData);
+        } catch (parseError) {
+            // If it's not JSON, use the text directly
+            data = textData;
+        }
         
         // Update the display with the greeting
         greetingElement.textContent = data;
