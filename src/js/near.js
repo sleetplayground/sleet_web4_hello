@@ -54,7 +54,8 @@ async function getGreeting() {
             'get_greeting',
             {}
         );
-        currentGreetingElement.textContent = greeting;
+        // Ensure we're displaying the raw greeting string
+        currentGreetingElement.textContent = typeof greeting === 'string' ? greeting : JSON.stringify(greeting);
     } catch (error) {
         console.error('Error getting greeting:', error);
         currentGreetingElement.textContent = 'Error getting greeting';
@@ -75,6 +76,7 @@ async function updateGreeting() {
     }
 
     try {
+        // Pass the greeting directly without additional formatting
         await call(
             getCurrentContractId(),
             'set_greeting',
