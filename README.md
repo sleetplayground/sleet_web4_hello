@@ -1,6 +1,8 @@
 # sleet_web4_hello
 🌐 a simple near hello web app made with html, css and js, and built for near web4
 
+ℹ️ uses near web4 login
+
 
 
 ### DEV
