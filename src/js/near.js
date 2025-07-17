@@ -54,8 +54,11 @@ async function getGreeting() {
             'get_greeting',
             {}
         );
-        // Ensure we're displaying the raw greeting string
-        currentGreetingElement.textContent = typeof greeting === 'string' ? greeting : JSON.stringify(greeting);
+        // Extract just the greeting value from JSON if needed
+        const greetingText = typeof greeting === 'string' ? 
+            greeting : 
+            (greeting.greeting || JSON.stringify(greeting));
+        currentGreetingElement.textContent = greetingText;
     } catch (error) {
         console.error('Error getting greeting:', error);
         currentGreetingElement.textContent = 'Error getting greeting';
